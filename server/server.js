@@ -47,6 +47,54 @@ app.get('/api/:isbn', (req, res) => {
   })
   })
 
+  app.put('/api/books/:bookid/checkout/:userid', (req, res)=> {
+    let bookid = req.params.bookid;
+    let userID = req.params.userid;
+    console.log("userid", userID)
+    let change = {
+      "userid": userID,
+      "checked_out": true
+    }
+
+    knex  
+      .select('*')
+      .from('books')
+      .where('ISBN', bookid)
+      .update(change)
+      //to update on back end, can send object through update
+      .then((data)=>{
+        knex
+        .select('*')
+        .from('books')
+        .then((data)=>{
+          return res.status(200).send(data)
+        })
+      })
+  })
+
+  app.put('/api/books/:bookid/return/', (req, res)=> {
+    let bookid = req.params.bookid;
+    let change = {
+      "userid": null,
+      "checked_out": false
+    }
+    knex  
+      .select('*')
+      .from('books')
+      .where('ISBN', bookid)
+      
+      .update(change)
+      //to update on back end, can send object through update
+      .then((data)=>{
+        knex
+        .select('*')
+        .from('books')
+        .then((data)=>{
+          return res.status(200).send(data)
+        })
+      })
+  })
+
 
 
 module.exports = app

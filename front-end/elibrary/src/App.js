@@ -1,17 +1,22 @@
 import app from './App.css';
 //to use axios after npm install axios to use for fetches
-import {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import Books from './components/books.js'
 import Book from './components/book.js'
 import {Switch, Link, Route, BrowserRouter as Router} from 'react-router-dom'
+
+
 //these are to be able to click links and rerender components
 // npm install react-router-dom to use those
-
 const axios = require('axios');
 
 function App() {
 
+ 
+
   const [listOfBooks, setListOfBooks] = useState([])
+
+
   useEffect( async ()=> {
     axios.get('http://localhost:3030/api/books')
     .then(
@@ -36,11 +41,11 @@ function App() {
           <Route exact path='/'>
             <div>
               <Books books={listOfBooks} />
-      {/* react components uppercase, selfclosing , includes listOfBooks, no need of $*/}
+      {/* react components uppercase, selfclosing , includes listOfBooks, no need of $, this is prop drilling! can go from app to books */}
             </div>
           </Route>
           <Route exact path='/book'>
-              <Book  />
+              <Book setList = {setListOfBooks}  />
           </Route>
         </Switch>
       </div>

@@ -6,6 +6,7 @@ exports.up = function(knex) {
     table.string('author');
     table.string('ISBN');
     table.boolean('checked_out');
+    table.string('userid')
     })
 };
 

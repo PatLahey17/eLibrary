@@ -8,6 +8,7 @@ return (
   <div>
     {
       bookList.map(book=> {
+        
         let checked = ''
         if (book.checked_out){
           checked = 'unavailable'
@@ -20,7 +21,9 @@ return (
               title:book.title,
               author:book.author,
               ISBN:book.ISBN,
+              checkedOut:book.checked_out,
               checked:checked
+              // we need userID here?
             }
           }}>
             <ul className='books' key = {book.ISBN}>
